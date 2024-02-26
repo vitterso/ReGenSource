@@ -16,6 +16,15 @@ ReGenSource is a tool that generates source code with localized resources from a
 
 Step one is to create a JSON file with the resources you want to localize.
 
+The JSON file must be added to your project file, along with a reference to the ReGenSource project. // TODO: Add info on how to add NuGet package.
+
+```xml
+<ItemGroup>
+    <AdditionalFiles Include="Resources.json" />
+    <ProjectReference Include="..\ReGenSource\ReGenSource.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+</ItemGroup>
+```
+
 The JSON file should be structured like this:
 
 ```json
@@ -53,8 +62,6 @@ The resources is an array of resources that will be generated. Each resource has
 
 ### `CultureDefinition`
 
-Optional.
-
 By default the culture is defined by the `Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName` property. This is what is compared with the translation languages.
 
 If you need a different way to define the culture, you can add a `CultureDefinition` property to the JSON file. This property should be a string that will be used as the culture definition in the generated code.
@@ -62,3 +69,4 @@ If you need a different way to define the culture, you can add a `CultureDefinit
 ```json
 "CultureDefinition": "global::System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName";
 ```
+
