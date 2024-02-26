@@ -1,0 +1,22 @@
+﻿{
+  "namespace": "MyApi.Resources",
+  "class": "MyResources",
+  "resources": [
+    {
+      "name": "Welcome",
+      "default": "Welcome to my application",
+      "translations": {
+        "nb": "Velkommen til min applikasjon",
+        "sv": "Välkommen till min applikation"
+      }
+    },
+    {
+      "name": "Goodbye",
+      "default": "Goodbye",
+      "translations": {
+        "nb": "Ha det bra",
+        "sv": "Hej då"
+      }
+    }
+  ]
+}

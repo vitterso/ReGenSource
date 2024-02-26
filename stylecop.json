@@ -1,0 +1,18 @@
+{
+  //https://github.com/DotNetAnalyzers/StyleCopAnalyzers/tree/master/documentation
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "layoutRules": {
+      "newlineAtEndOfFile": "require"
+    },
+    "orderingRules": {
+      "usingDirectivesPlacement": "outsideNamespace",
+      "elementOrder": [
+        "kind",
+        "constant",
+        "readonly"
+      ]
+    }
+  }
+}
+
