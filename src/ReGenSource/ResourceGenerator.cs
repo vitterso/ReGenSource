@@ -5,43 +5,42 @@ using Microsoft.CodeAnalysis.Text;
 
 namespace ReGenSource;
 
-[Generator]
-internal class ResourceGenerator : ISourceGenerator
+[Generator(LanguageNames.CSharp)]
+internal sealed class ResourceGenerator : IIncrementalGenerator
 {
     private static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
         PropertyNameCaseInsensitive = true
     };
 
-    public void Initialize(GeneratorInitializationContext context)
+    public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-    }
+        var configTexts = context.AdditionalTextsProvider
+            .Where(file => file.Path.EndsWith(".json"))
+            .Select((text, cancellationToken) => (Name: Path.GetFileNameWithoutExtension(text.Path), Content: text.GetText(cancellationToken)?.ToString()));
 
-    public void Execute(GeneratorExecutionContext context)
-    {
-        var configFiles = context.AdditionalFiles.Where(f => f.Path.EndsWith(".json"));
-        foreach (var configFile in configFiles)
+        context.RegisterSourceOutput(configTexts, (ctx, nameAndContent) =>
         {
-            var text = configFile.GetText()?.ToString();
-            if (string.IsNullOrWhiteSpace(text))
+            if (string.IsNullOrWhiteSpace(nameAndContent.Content))
             {
-                context.ReportDiagnostic(Diagnostics.EmptyJsonFile(configFile.Path));
-                continue;
+                ctx.ReportDiagnostic(Diagnostics.EmptyJsonFile(nameAndContent.Name));
+                return;
             }
 
-            var (config, exception) = TryDeserializeConfig(text);
+            var (config, exception) = TryDeserializeConfig(nameAndContent.Content!);
             if (config is null || exception is not null)
             {
-                context.ReportDiagnostic(Diagnostics.InvalidJsonFile(configFile.Path, exception));
-                continue;
+                ctx.ReportDiagnostic(Diagnostics.InvalidJsonFile(nameAndContent.Name, exception));
+                return;
             }
 
             var sourceFileName = $"{config.Namespace ?? ReGenSourceConfig.DefaultNamespace}.{config.Class ?? ReGenSourceConfig.DefaultClass}.g.cs";
-            context.AddSource(sourceFileName, SourceText.From(config.ToCode(), Encoding.UTF8));
-        }
+            var sourceCode = config.ToCode();
+            ctx.AddSource(sourceFileName, SourceText.From(sourceCode, Encoding.UTF8));
+        });
     }
 
-    private (ReGenSourceConfig? Config, Exception? Exception) TryDeserializeConfig(string text)
+    private static (ReGenSourceConfig? Config, Exception? Exception) TryDeserializeConfig(string text)
     {
         try
         {

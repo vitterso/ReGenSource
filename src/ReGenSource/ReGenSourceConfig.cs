@@ -4,8 +4,8 @@ namespace ReGenSource;
 
 internal sealed class ReGenSourceConfig
 {
-    internal const string DefaultNamespace = "ReGenSource";
-    internal const string DefaultClass = "Resources";
+    public const string DefaultNamespace = "ReGenSource";
+    public const string DefaultClass = "Resources";
 
     public string? Namespace { get; set; }
 
@@ -32,7 +32,7 @@ internal sealed class ReGenSourceConfig
 
             sb.AppendLine();
             sb.AppendLine("    /// <summary>");
-            sb.AppendLine($"    /// Localized string for the current culture, e.g. \"{resource.Default?[..Math.Min(20, resource.Default.Length)]}...\"");
+            sb.AppendLine($"    /// Localized string for the current culture, e.g. \"{resource.Default?.Substring(0, Math.Min(20, resource.Default.Length))}...\"");
             sb.AppendLine("    /// </summary>");
             sb.AppendLine($"    public static string {resource.Name} => {CultureDefinition} switch");
             sb.AppendLine("    {");
@@ -42,6 +42,7 @@ internal sealed class ReGenSourceConfig
             }
             sb.AppendLine($"        _ => _{resource.Name}_default");
             sb.AppendLine("    };");
+            sb.AppendLine();
         }
 
         sb.AppendLine("}");

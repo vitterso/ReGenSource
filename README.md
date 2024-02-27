@@ -67,6 +67,6 @@ By default the culture is defined by the `Thread.CurrentThread.CurrentUICulture.
 If you need a different way to define the culture, you can add a `CultureDefinition` property to the JSON file. This property should be a string that will be used as the culture definition in the generated code.
 
 ```json
-"CultureDefinition": "global::System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName";
+"CultureDefinition": "global::System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName"
 ```
 
