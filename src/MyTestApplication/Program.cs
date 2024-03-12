@@ -2,18 +2,16 @@
 using MyApi;
 using MyApi.Resources;
 
-var write = () => Console.WriteLine(MyResources.Welcome);
-
-write();
+Console.WriteLine(MyResources.Welcome);
 
 using (UiCultureScope.Begin(new CultureInfo("nb-NO")))
 {
-    write();
+    Console.WriteLine(MyResources.Welcome);
 }
 
-write();
+Console.WriteLine(MyResources.Welcome);
 
 using (UiCultureScope.Begin(new CultureInfo("sv-SE")))
 {
-    Console.WriteLine(MyResources.Goodbye);
+    Console.WriteLine(MyResources.Welcome);
 }

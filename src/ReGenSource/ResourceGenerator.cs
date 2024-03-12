@@ -16,7 +16,7 @@ internal sealed class ResourceGenerator : IIncrementalGenerator
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         var configTexts = context.AdditionalTextsProvider
-            .Where(file => file.Path.EndsWith(".json"))
+            .Where(file => file.Path.EndsWith(".res.json"))
             .Select((text, cancellationToken) => (Name: Path.GetFileNameWithoutExtension(text.Path), Content: text.GetText(cancellationToken)?.ToString()));
 
         context.RegisterSourceOutput(configTexts, (ctx, nameAndContent) =>

@@ -14,6 +14,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution", ".solution", "{
 		stylecop.ruleset = stylecop.ruleset
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{D74D8C16-F2E0-43A4-B3A7-ECF4969D327A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{7D079891-D3F2-42F2-BB74-C1B99B67687B}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,5 +39,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9A8450B3-A6AF-40AE-893E-0DDBDC724867} = {9B81E25E-57BB-41C8-B229-3AF87FF7557E}
 		{53F30214-BD89-4A32-B8A9-2C412BC14F67} = {9B81E25E-57BB-41C8-B229-3AF87FF7557E}
+		{7D079891-D3F2-42F2-BB74-C1B99B67687B} = {D74D8C16-F2E0-43A4-B3A7-ECF4969D327A}
 	EndGlobalSection
 EndGlobal

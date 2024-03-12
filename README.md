@@ -14,13 +14,13 @@ ReGenSource is a tool that generates source code with localized resources from a
 
 ## How can I use this in my project?
 
-Step one is to create a JSON file with the resources you want to localize.
+Step one is to create a JSON file with the resources you want to localize. The file name must end with `.res.json`.
 
 The JSON file must be added to your project file, along with a reference to the ReGenSource project. // TODO: Add info on how to add NuGet package.
 
 ```xml
 <ItemGroup>
-    <AdditionalFiles Include="Resources.json" />
+    <AdditionalFiles Include="Resources.res.json" />
     <ProjectReference Include="..\ReGenSource\ReGenSource.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
 </ItemGroup>
 ```

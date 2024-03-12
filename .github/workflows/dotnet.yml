@@ -1,0 +1,32 @@
+name: .Net Core
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.10.2
+        with:
+          versionSpec: '5.x'
+      - name: Determine Version
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v0.10.2
+        with:
+          useConfigFile: true
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4.0.0
+        with:
+          dotnet-version: 8.0.x
+      
+      - name: Pack
+        run: dotnet pack src/ReGenSource/ReGenSource.csproj -c Release -o ./publish /p:Version="${{ steps.gitversion.outputs.fullSemVer }}"
+
+      - name: Push to NuGet
+        run: dotnet nuget push ./publish/**.nupkg -s https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
