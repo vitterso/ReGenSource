@@ -21,7 +21,7 @@ The JSON file must be added to your project file, along with a reference to the 
 ```xml
 <ItemGroup>
     <AdditionalFiles Include="Resources.res.json" />
-    <PackageReference Include="ReGenSource" Version="0.1.0-ci.9" />
+    <PackageReference Include="ReGenSource" Version="0.1.0-ci.11" />
 </ItemGroup>
 ```
 
