@@ -18,7 +18,7 @@ internal static class Diagnostics
     {
         var message = $"The JSON file '{filePath}' cannot be deserialized to a valid configuration object";
         if (exception is not null)
-            message += $": {exception.Message}";
+            message += $": {exception}";
 
         return Diagnostic.Create(
             new DiagnosticDescriptor(
