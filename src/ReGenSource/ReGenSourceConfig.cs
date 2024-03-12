@@ -28,7 +28,7 @@ internal sealed class ReGenSourceConfig
             {
                 sb.AppendLine($"    private const string _{resource.Name}_{translation.Key} = @\"{translation.Value.Replace("\"", "\"\"")}\";");
             }
-            sb.AppendLine($"    private const string _{resource.Name}_default = \"{resource.Default}\";");
+            sb.AppendLine($"    private const string _{resource.Name}_default = @\"{resource.Default?.Replace("\"", "\"\"")}\";");
 
             sb.AppendLine();
             sb.AppendLine("    /// <summary>");
