@@ -21,7 +21,7 @@ The JSON file must be added to your project file, along with a reference to the 
 ```xml
 <ItemGroup>
     <AdditionalFiles Include="Resources.res.json" />
-    <PackageReference Include="ReGenSource" Version="0.1.0-ci.11" />
+    <PackageReference Include="ReGenSource" Version="0.1.0-ci.17" />
 </ItemGroup>
 ```
 
@@ -70,3 +70,10 @@ If you need a different way to define the culture, you can add a `CultureDefinit
 "CultureDefinition": "global::System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName"
 ```
 
+### ClassAccessModifier
+
+By default the class is generated as a `public` class. It can however be set as `internal` by overriding the `ClassAccessModifier` property:
+
+```json
+"ClassAccessModifier": "Internal"
+```

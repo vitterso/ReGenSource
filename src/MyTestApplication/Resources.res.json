@@ -1,6 +1,7 @@
 ﻿{
   "namespace": "MyApi.Resources",
   "class": "MyResources",
+  "classAccessModifier": "Internal",
   "resources": [
     {
       "name": "Welcome",

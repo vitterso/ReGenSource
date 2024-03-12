@@ -7,6 +7,8 @@ internal sealed class ReGenSourceConfig
     public const string DefaultNamespace = "ReGenSource";
     public const string DefaultClass = "Resources";
 
+    public ClassAccessModifier ClassAccessModifier { get; set; } = ClassAccessModifier.Public;
+
     public string? Namespace { get; set; }
 
     public string? Class { get; set; }
@@ -20,7 +22,7 @@ internal sealed class ReGenSourceConfig
         var sb = new StringBuilder();
 
         sb.AppendLine($"namespace {Namespace ?? DefaultNamespace};");
-        sb.AppendLine($"public static class {Class ?? DefaultClass}");
+        sb.AppendLine($"{ClassAccessModifier.ToString().ToLowerInvariant()} static class {Class ?? DefaultClass}");
         sb.AppendLine("{");
         foreach (var resource in Resources)
         {
