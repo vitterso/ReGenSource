@@ -7,7 +7,7 @@
       "name": "Welcome",
       "default": "Welcome to my application",
       "translations": {
-        "nb": "Velkommen til min applikasjon",
+        "nb,nn": "Velkommen til min applikasjon",
         "sv": "Välkommen till min applikation"
       }
     },
@@ -16,6 +16,7 @@
       "default": "Goodbye",
       "translations": {
         "nb": "Ha det bra",
+        "nn": "Me pratast",
         "sv": "Hej då"
       }
     }

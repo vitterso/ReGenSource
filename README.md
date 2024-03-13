@@ -36,31 +36,31 @@ The JSON file should be structured like this:
          "name": "Welcome",
          "default": "Welcome to my application",
          "translations": {
-            "nb": "Velkommen til min applikasjon",
-            "pt": "Bem-vindo ao meu aplicativo"
+            "pt": "Bem-vindo ao meu aplicativo",
+            "nb,nn": "Velkommen til min applikasjon"
          }
       }
    ]
 }
 ```
 
-### `Namespace`
+### Namespace
 
 The namespace is the namespace that the generated class will be placed in.
 
 By default, the namespace is `ReGenSource`.
 
-### `Class`
+### Class
 
 The class is the name of the class that will be generated.
 
 By default, the class is `Resources`.
 
-### `Resources`
+### Resources
 
 The resources is an array of resources that will be generated. Each resource has a name, a default value, and a set of translations. The default value is used when no translation is found for the current culture.
 
-### `CultureDefinition`
+### CultureDefinition
 
 By default the culture is defined by the `Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName` property. This is what is compared with the translation languages.
 
@@ -77,3 +77,17 @@ By default the class is generated as a `public` class. It can however be set as 
 ```json
 "ClassAccessModifier": "Internal"
 ```
+
+### Resources
+
+#### Name
+
+The name of the resource, used as the property name in the generated class.
+
+#### Default
+
+This is the translation to fallback to when no other translation is found for the given language.
+
+#### Translations
+
+Keys support comma-separated values to allow for multiple languages to be used for the same translation.

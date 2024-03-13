@@ -28,7 +28,8 @@ internal sealed class ReGenSourceConfig
         {
             foreach (var translation in resource.Translations)
             {
-                sb.AppendLine($"    private const string _{resource.Name}_{translation.Key} = @\"{translation.Value.Replace("\"", "\"\"")}\";");
+                var concatenatedLanguageKeys = string.Join("_", translation.Key.Split(','));
+                sb.AppendLine($"    private const string _{resource.Name}_{concatenatedLanguageKeys} = @\"{translation.Value.Replace("\"", "\"\"")}\";");
             }
             sb.AppendLine($"    private const string _{resource.Name}_default = @\"{resource.Default?.Replace("\"", "\"\"")}\";");
 
@@ -46,7 +47,12 @@ internal sealed class ReGenSourceConfig
             sb.AppendLine("    {");
             foreach (var translation in resource.Translations)
             {
-                sb.AppendLine($"        \"{translation.Key}\" => _{resource.Name}_{translation.Key},");
+                var languageKeys = translation.Key.Split(',');
+                var concatenatedLanguageKeys = string.Join("_", languageKeys);
+                foreach (var languageKey in languageKeys)
+                {
+                    sb.AppendLine($"        \"{languageKey}\" => _{resource.Name}_{concatenatedLanguageKeys},");
+                }
             }
             sb.AppendLine($"        _ => _{resource.Name}_default");
             sb.AppendLine("    };");
