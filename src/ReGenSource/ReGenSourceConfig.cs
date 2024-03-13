@@ -34,7 +34,13 @@ internal sealed class ReGenSourceConfig
 
             sb.AppendLine();
             sb.AppendLine("    /// <summary>");
-            sb.AppendLine($"    /// Localized string for the current culture, e.g. \"{resource.Default?.Substring(0, Math.Min(20, resource.Default.Length))}...\"");
+
+            var hint = resource.Default?
+                .Substring(0, Math.Min(20, resource.Default.Length))
+                .Replace("\r", string.Empty)
+                .Replace("\n", string.Empty);
+
+            sb.AppendLine($"    /// Localized string for the current culture, e.g. \"{hint}...\"");
             sb.AppendLine("    /// </summary>");
             sb.AppendLine($"    public static string {resource.Name} => {CultureDefinition} switch");
             sb.AppendLine("    {");
