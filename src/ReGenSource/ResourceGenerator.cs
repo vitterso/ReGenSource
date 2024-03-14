@@ -1,20 +1,19 @@
 ﻿using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace ReGenSource;
 
 [Generator(LanguageNames.CSharp)]
 internal sealed class ResourceGenerator : IIncrementalGenerator
 {
-    private static readonly JsonSerializerOptions JsonSerializerOptions = new()
+    private static readonly JsonSerializerSettings JsonSerializerSettings = new()
     {
-        PropertyNameCaseInsensitive = true,
         Converters =
         {
-            new JsonStringEnumConverter()
+            new StringEnumConverter()
         }
     };
 
@@ -49,7 +48,7 @@ internal sealed class ResourceGenerator : IIncrementalGenerator
     {
         try
         {
-            var config = JsonSerializer.Deserialize<ReGenSourceConfig>(text, JsonSerializerOptions);
+            var config = JsonConvert.DeserializeObject<ReGenSourceConfig>(text, JsonSerializerSettings);
             return (config, null);
         }
         catch (Exception e)
