@@ -1,0 +1,7 @@
+**/bin
+**/obj
+**/out
+**/node_modules
+**/.vscode
+**/.vs
+.dotnet

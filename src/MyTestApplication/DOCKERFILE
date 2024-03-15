@@ -1,0 +1,14 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0.202
+
+WORKDIR /app
+
+COPY README.md ./README.md
+COPY LICENSE.txt ./LICENSE.txt
+COPY stylecop.json ./stylecop.json
+COPY stylecop.ruleset ./stylecop.ruleset
+
+COPY src/MyTestApplication/ ./src/MyTestApplication
+COPY src/ReGenSource ./src/ReGenSource
+
+RUN chmod +x src/MyTestApplication/build_with_local_nuget.sh
+RUN ./src/MyTestApplication/build_with_local_nuget.sh

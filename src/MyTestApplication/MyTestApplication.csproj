@@ -12,11 +12,7 @@
 
     <ItemGroup>
         <AdditionalFiles Include="Resources.res.json" />
-        <!--<ProjectReference Include="..\ReGenSource\ReGenSource.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />-->
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="ReGenSource" Version="0.2.0" />
+        <ProjectReference Include="..\ReGenSource\ReGenSource.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
 
 </Project>
