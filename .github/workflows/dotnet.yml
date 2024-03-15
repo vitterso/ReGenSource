@@ -3,7 +3,7 @@ name: .Net Core
 on: [push]
 
 jobs:
-  build:
+  build-analyzer:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,3 +30,27 @@ jobs:
 
       - name: Push to NuGet
         run: dotnet nuget push ./publish/**.nupkg -s https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+
+  build-testapp-projectreference:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4.0.0
+        with:
+          dotnet-version: 8.0.x
+      - name: BuildWithProjectReference
+        run: dotnet build src/MyTestApplication/MyTestApplication.csproj -c Release
+
+  build-testapp-packagereference:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4.0.0
+        with:
+          dotnet-version: 8.0.x
+      - name: BuildWithProjectReference
+        run: |
+          chmod +x src/MyTestApplication/build_with_local_nuget.sh
+          ./src/MyTestApplication/build_with_local_nuget.sh
