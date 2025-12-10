@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution", ".solution", "{
 		README.md = README.md
 		LICENSE.txt = LICENSE.txt
 		.editorconfig = .editorconfig
+		logo.png = logo.png
+		logo_original.png = logo_original.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{D74D8C16-F2E0-43A4-B3A7-ECF4969D327A}"

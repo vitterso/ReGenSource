@@ -20,12 +20,13 @@
     <PackageId>ReGenSource</PackageId>
     <Product>ReGenSource</Product>
     <Description>ReGenSource is a library for generating localized strings in code from a json resource file.</Description>
-    <PackageIconUrl>https://raw.githubusercontent.com/vitterso/ReGenSource/main/logo.png</PackageIconUrl>
+    <PackageIcon>logo.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath=""/>
     <None Include="../../LICENSE.txt" Pack="true" PackagePath=""/>
+    <None Include="../../logo.png" Pack="true" PackagePath="\"/>
 
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     <None Include="$(PKGSystem_Text_Json)\lib\netstandard2.0\System.Text.Json.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
