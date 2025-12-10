@@ -1,11 +1,9 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0.202
+FROM mcr.microsoft.com/dotnet/sdk:10.0.100
 
 WORKDIR /app
 
 COPY README.md ./README.md
 COPY LICENSE.txt ./LICENSE.txt
-COPY stylecop.json ./stylecop.json
-COPY stylecop.ruleset ./stylecop.ruleset
 
 COPY src/MyTestApplication/ ./src/MyTestApplication
 COPY src/ReGenSource ./src/ReGenSource
