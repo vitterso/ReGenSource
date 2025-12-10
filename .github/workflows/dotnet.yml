@@ -21,7 +21,7 @@ jobs:
           useConfigFile: true
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4.0.0
+        uses: actions/setup-dotnet@v5.0.1
         with:
           dotnet-version: 8.0.x
       
@@ -36,7 +36,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4.0.0
+        uses: actions/setup-dotnet@v5.0.1
         with:
           dotnet-version: 8.0.x
       - name: BuildWithProjectReference
@@ -47,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4.0.0
+        uses: actions/setup-dotnet@v5.0.1
         with:
           dotnet-version: 8.0.x
       - name: BuildWithProjectReference
