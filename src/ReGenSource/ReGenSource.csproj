@@ -20,6 +20,7 @@
     <PackageId>ReGenSource</PackageId>
     <Product>ReGenSource</Product>
     <Description>ReGenSource is a library for generating localized strings in code from a json resource file.</Description>
+    <PackageIconUrl>https://raw.githubusercontent.com/vitterso/ReGenSource/main/logo.png</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,9 +34,9 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.0.0" PrivateAssets="all" />
 
     <!-- Analyzer dependency -->
-    <PackageReference Include="System.Text.Json" Version="8.0.5" PrivateAssets="all" GeneratePathProperty="true" />
+    <PackageReference Include="System.Text.Json" Version="10.0.1" PrivateAssets="all" GeneratePathProperty="true" />
   </ItemGroup>
-  
+
   <PropertyGroup>
     <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
   </PropertyGroup>
