@@ -20,13 +20,30 @@ jobs:
         with:
           useConfigFile: true
 
+      - name: Truncate Version for NuGet
+        id: version
+        run: |
+          VERSION="${{ steps.gitversion.outputs.fullSemVer }}"
+          MAX_LENGTH=60
+          if [ ${#VERSION} -gt $MAX_LENGTH ]; then
+            # Extract the build number suffix (last segment after final dot)
+            SUFFIX=".${VERSION##*.}"
+            # Get everything before the suffix
+            PREFIX="${VERSION%.*}"
+            # Calculate how much of prefix we can keep
+            AVAILABLE=$((MAX_LENGTH - ${#SUFFIX}))
+            # Truncate prefix and reassemble
+            VERSION="${PREFIX:0:$AVAILABLE}$SUFFIX"
+          fi
+          echo "nugetVersion=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Setup .NET
-        uses: actions/setup-dotnet@v5.0.1
+        uses: actions/setup-dotnet@v5.1.0
         with:
           dotnet-version: 8.0.x
       
       - name: Pack
-        run: dotnet pack src/ReGenSource/ReGenSource.csproj -c Release -o ./publish /p:Version="${{ steps.gitversion.outputs.fullSemVer }}"
+        run: dotnet pack src/ReGenSource/ReGenSource.csproj -c Release -o ./publish /p:Version="${{ steps.version.outputs.nugetVersion }}"
 
       - name: Push to NuGet
         run: dotnet nuget push ./publish/**.nupkg -s https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
@@ -36,7 +53,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Setup .NET
-        uses: actions/setup-dotnet@v5.0.1
+        uses: actions/setup-dotnet@v5.1.0
         with:
           dotnet-version: 8.0.x
       - name: BuildWithProjectReference
@@ -47,7 +64,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Setup .NET
-        uses: actions/setup-dotnet@v5.0.1
+        uses: actions/setup-dotnet@v5.1.0
         with:
           dotnet-version: 8.0.x
       - name: BuildWithProjectReference
