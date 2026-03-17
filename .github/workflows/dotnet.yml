@@ -53,7 +53,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5.2.0
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: 10.0.x
       - name: BuildWithProjectReference
         run: dotnet build src/MyTestApplication/MyTestApplication.csproj -c Release
 
@@ -64,7 +64,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5.2.0
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: 10.0.x
       - name: BuildWithProjectReference
         run: |
           chmod +x src/MyTestApplication/build_with_local_nuget.sh
