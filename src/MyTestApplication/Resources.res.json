@@ -1,4 +1,4 @@
-﻿{
+{
   "namespace": "MyApi.Resources",
   "class": "MyResources",
   "classAccessModifier": "Internal",
@@ -19,6 +19,18 @@
         "nn": "Me pratast",
         "sv": "Hej då"
       }
+    },
+    {
+      "name": "Notice",
+      "type": "TextFile",
+      "default": "Files/Notice.txt",
+      "cacheTimeout": "00:00:30"
+    },
+    {
+      "name": "Logo",
+      "type": "Binary",
+      "default": "Files/logo.png",
+      "cacheTimeout": "infinite"
     }
   ]
 }

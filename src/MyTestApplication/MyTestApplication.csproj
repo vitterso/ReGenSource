@@ -13,7 +13,16 @@
 
     <ItemGroup>
         <AdditionalFiles Include="Resources.res.json" />
+        <!-- One declaration per referenced file: AdditionalFiles feeds the generator's compile-time
+             existence check, and CopyToOutputDirectory (promoted by ReGenSource.targets) copies it to
+             the output directory so the generated code can read it at runtime. -->
+        <AdditionalFiles Include="Files\logo.png" CopyToOutputDirectory="PreserveNewest" />
+        <AdditionalFiles Include="Files\Notice.txt" CopyToOutputDirectory="PreserveNewest" />
         <ProjectReference Include="..\ReGenSource\ReGenSource.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     </ItemGroup>
+
+    <!-- A PackageReference consumer imports this automatically from the package's build/ folder. This
+         test app uses a ProjectReference, which does not flow package build assets, so import it here. -->
+    <Import Project="..\ReGenSource\build\ReGenSource.targets" />
 
 </Project>

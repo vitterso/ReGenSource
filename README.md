@@ -118,3 +118,63 @@ Notes:
 - The parameter list is the union of all placeholder names across the default and every translation, in order of first appearance. A translation that omits a placeholder (like `sv` above) simply ignores the extra argument.
 - Resources without any placeholder keep the original property form (e.g. `public static string Welcome`), so this is backward compatible.
 - Any literal `{` or `}` that is not part of a placeholder is emitted escaped (`{{` / `}}`) so `string.Format` treats it as a literal brace.
+
+#### Type
+
+A resource can be one of the following types (defaulting to `Text`):
+
+- `Text` — an inline localized string (everything described above).
+- `TextFile` — the `default`/`translations` values are file paths; the generated member reads the file's text at runtime and returns a `string`.
+- `Binary` — the values are file paths; the generated member reads the file's bytes at runtime and returns a `byte[]`.
+
+```json
+{
+   "name": "Logo",
+   "type": "Binary",
+   "default": "logo.png",
+   "cacheTimeout": "00:05:00"
+}
+```
+
+generates:
+
+```csharp
+public static byte[] Logo => /* reads logo.png at runtime */;
+```
+
+File-backed resources still support per-culture paths via `translations`, so an image or text file can be localized or shared across cultures.
+
+##### Declaring referenced files
+
+Each file referenced by a `TextFile`/`Binary` resource is declared **once**, as an `AdditionalFiles` item with `CopyToOutputDirectory` metadata:
+
+```xml
+<AdditionalFiles Include="logo.png" CopyToOutputDirectory="PreserveNewest" />
+```
+
+This single line does two jobs:
+
+- `AdditionalFiles` makes the file visible to the generator for the compile-time existence check (source generators may not touch the disk, so this is the only way to see it).
+- `CopyToOutputDirectory` copies the file to the output directory. ReGenSource ships an MSBuild targets file (auto-imported with the NuGet package) that promotes such `AdditionalFiles` into the build's copy-to-output pipeline.
+
+##### Loading and paths
+
+File contents are **not** embedded in the assembly — they are read at runtime. Relative paths resolve against the application base directory (next to the assembly), **not** the working directory, which is why referenced files are copied to the output directory. The path in the JSON should therefore match the file's location relative to that output directory (mirroring its location in the project).
+
+Binary resources return a fresh copy of the byte array on each access, so callers can safely mutate the result without corrupting the cache.
+
+##### cacheTimeout
+
+By default a file is read from disk on **every** access (nothing is retained in memory). Set `cacheTimeout` to keep the loaded content around:
+
+- omitted — no caching (read every time).
+- a TimeSpan string such as `"00:05:00"` — cache for that duration measured from load, then reload on the next access.
+- `"infinite"` — cache for the lifetime of the application.
+
+The cache is thread-safe and keyed by the resolved path. A cached entry is evicted by a timer when it expires, so its memory is freed even if the resource is never accessed again (nothing is retained past its timeout). `"infinite"` entries are, by design, kept for the lifetime of the application.
+
+##### Compile-time existence check
+
+By default the generator verifies at compile time that every file referenced by a `TextFile`/`Binary` resource exists. Because source generators may not touch the disk, this check is performed against the project's `AdditionalFiles` — which is exactly how the files are declared above, so no extra setup is needed.
+
+The check can be disabled globally with `"validateFilePaths": false` at the root of the JSON, or per resource with `"validateFilePath": false`. When disabled, a referenced file no longer needs to be an `AdditionalFiles` item, but it still needs to reach the output directory some other way (e.g. `<None Include="..." CopyToOutputDirectory="PreserveNewest" />`) to be loadable at runtime.

@@ -1,0 +1,22 @@
+<Project>
+
+  <!--
+    ReGenSource loads TextFile/Binary resources from disk at runtime, and its generator verifies at
+    compile time that referenced files exist (via AdditionalFiles, since generators may not touch the
+    disk - RS1035). This target lets a project declare such a file just ONCE, as an AdditionalFiles
+    item carrying CopyToOutputDirectory metadata: the item feeds the compile-time check, and this
+    target promotes it into the build's copy-to-output pipeline so it is available at runtime.
+
+        <AdditionalFiles Include="logo.png" CopyToOutputDirectory="PreserveNewest" />
+  -->
+  <Target Name="ReGenSourceCopyReferencedFiles" BeforeTargets="AssignTargetPaths">
+    <ItemGroup>
+      <None Include="@(AdditionalFiles)" Condition="'%(AdditionalFiles.CopyToOutputDirectory)' != ''">
+        <CopyToOutputDirectory>%(AdditionalFiles.CopyToOutputDirectory)</CopyToOutputDirectory>
+        <TargetPath Condition="'%(AdditionalFiles.TargetPath)' != ''">%(AdditionalFiles.TargetPath)</TargetPath>
+        <Link Condition="'%(AdditionalFiles.Link)' != ''">%(AdditionalFiles.Link)</Link>
+      </None>
+    </ItemGroup>
+  </Target>
+
+</Project>

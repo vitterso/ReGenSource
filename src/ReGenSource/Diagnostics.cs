@@ -30,4 +30,24 @@ internal static class Diagnostics
                 true),
             null);
     }
+
+    public static Diagnostic ReferencedFileNotFound(string fileName, string? resourceName, string resourcePath, string resolvedPath) => Diagnostic.Create(
+        new DiagnosticDescriptor(
+            "RESGEN003",
+            "Referenced file not found",
+            $"Resource '{resourceName}' in '{fileName}' references the file '{resourcePath}' (resolved to '{resolvedPath}'), which is not among the project's AdditionalFiles. Add it as an <AdditionalFiles> item, or disable the check with \"validateFilePaths\": false.",
+            "JSON",
+            DiagnosticSeverity.Warning,
+            true),
+        null);
+
+    public static Diagnostic InvalidCacheTimeout(string fileName, string? resourceName, string value) => Diagnostic.Create(
+        new DiagnosticDescriptor(
+            "RESGEN004",
+            "Invalid cache timeout",
+            $"Resource '{resourceName}' in '{fileName}' has an invalid cacheTimeout '{value}'; expected a TimeSpan string (e.g. \"00:05:00\") or \"infinite\". Caching is disabled for this resource.",
+            "JSON",
+            DiagnosticSeverity.Warning,
+            true),
+        null);
 }

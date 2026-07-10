@@ -13,6 +13,7 @@ dotnet nuget add source --name "$localNugetSourceName" "$localNugetRepo"
 
 cp MyTestApplication.csproj "$newProjectFile"
 sed -i "s#<ProjectReference.*#<PackageReference Include=\"\ReGenSource\" Version=\"$localNugetVersion\" />#" "$newProjectFile"
+sed -i "/<Import Project=.*ReGenSource.targets/d" "$newProjectFile"
 
 dotnet build "$newProjectFile"
 exit_code=$?
