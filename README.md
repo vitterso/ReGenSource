@@ -91,3 +91,30 @@ This is the translation to fallback to when no other translation is found for th
 #### Translations
 
 Keys support comma-separated values to allow for multiple languages to be used for the same translation.
+
+#### Variables
+
+A translation (or the default value) may contain named placeholders written as `{name}`, where the name is a valid C# identifier. When a resource contains any placeholder, the generated member becomes a **method** that takes one `object?` parameter per distinct placeholder and formats the localized string with `string.Format`:
+
+```json
+{
+   "name": "Welcome",
+   "default": "Welcome to my application, {name}",
+   "translations": {
+      "nb,nn": "Velkommen til min applikasjon, {name}",
+      "sv": "Välkommen till min applikation"
+   }
+}
+```
+
+generates:
+
+```csharp
+public static string Welcome(object? @name) => string.Format(/* culture switch */, @name);
+```
+
+Notes:
+
+- The parameter list is the union of all placeholder names across the default and every translation, in order of first appearance. A translation that omits a placeholder (like `sv` above) simply ignores the extra argument.
+- Resources without any placeholder keep the original property form (e.g. `public static string Welcome`), so this is backward compatible.
+- Any literal `{` or `}` that is not part of a placeholder is emitted escaped (`{{` / `}}`) so `string.Format` treats it as a literal brace.

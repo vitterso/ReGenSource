@@ -5,9 +5,9 @@
   "resources": [
     {
       "name": "Welcome",
-      "default": "Welcome to my application",
+      "default": "Welcome to my application, {name}",
       "translations": {
-        "nb,nn": "Velkommen til min applikasjon",
+        "nb,nn": "Velkommen til min applikasjon, {name}",
         "sv": "Välkommen till min applikation"
       }
     },
