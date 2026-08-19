@@ -4,16 +4,23 @@
 # Language specific diffs.
 *.cs diff=csharp
 
-# Declare files that will always have CRLF line endings on checkout.
-*.sln text eol=crlf
-*.csproj text eol=crlf
-*.xproj text eol=crlf
+# NOTE: deliberately no `eol=crlf` overrides here (they used to exist for
+# *.sln / *.csproj / *.xproj). `eol=crlf` forces a CRLF working tree on *every*
+# platform, including Linux CI, so the working tree never matches the LF blob.
+# Any tool that commits working-tree bytes verbatim -- notably Dependabot, which
+# commits through the GitHub API and bypasses normalization -- then writes a CRLF
+# blob. Git wants to renormalize it forever, so the file shows as permanently
+# "modified" with no visible content change. `* text=auto` above already gives
+# Windows checkouts CRLF via core.autocrlf, and MSBuild/Visual Studio do not care
+# about line endings in .sln/.csproj.
 
 # Denote all files that are truly binary and should not be modified.
 *.jpg binary
 *.png binary
 *.gif binary
 
+# eol=lf is safe in a way eol=crlf is not: repo blobs are already LF, so a Linux
+# checkout round-trips unchanged and bots cannot poison the blob.
 *.sh text eol=lf
 *.yml text eol=lf
 *.yaml text eol=lf
