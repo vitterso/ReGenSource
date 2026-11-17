@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ReGenSource is a Roslyn **incremental source generator**, packaged as a NuGet analyzer, that generates a C# class of localized strings from a `*.res.json` file at compile time. It exists to replace `.resx` files. Consumers add their JSON as an `AdditionalFiles` item and reference the package; the generated class exposes each resource as a `static string` property that resolves at runtime via a `switch` on the current UI culture, falling back to a `default` value.
 
-The generator project targets **netstandard2.0** (a hard requirement for analyzers/source generators — do not change this). The consuming test app targets **net10.0**.
+The generator project targets **netstandard2.0** (a hard requirement for analyzers/source generators — do not change this). The consuming test app targets **net11.0**.
 
 ## Commands
 
@@ -38,7 +38,7 @@ There is **no test project**. Verification is done by building/running `MyTestAp
 `MyTestApplication` sets `EmitCompilerGeneratedFiles`, so generated sources are written to disk under:
 
 ```
-src/MyTestApplication/obj/Debug/net10.0/generated/ReGenSource/ReGenSource.ResourceGenerator/
+src/MyTestApplication/obj/Debug/net11.0/generated/ReGenSource/ReGenSource.ResourceGenerator/
 ```
 
 Read that `.g.cs` file to confirm what the generator actually produced after a build.
